@@ -45,12 +45,13 @@
               <div class="card-body p-4">
                 <h4 class="text-center my-3 pb-3">To Do App</h4>
 
-                <form
+                <form method="get"
                   class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
                 >
+                  {% csrf_token %}
                   <div class="col-12">
                     <div class="form-outline">
-                      <input type="text" id="form1" class="form-control mt-4"/>
+                      <input type="text" id="form1" class="form-control mt-4" name="searchValue"/>
                       <label class="form-label" for="form1"
                         >Search here</label
                       >
@@ -74,15 +75,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                  {% for i in objects %}
+                  {% for i in p %}
                     <tr>
                       <th scope="row">{{forloop.counter}}</th>
                       <td>{{i.name}}</td>
                       <td>{{i.status}}</td>
                       <td>
+                        <a href="{% url 'todo:edit' i.id %}">
                         <button type="submit" class="btn btn-warning">
                           Edit
                         </button>
+                          </a>
                         <a href="{% url 'todo:detail' i.id %}">
                         <button type="submit" class="btn btn-info">
                           Look through
@@ -93,11 +96,31 @@
                   {% endfor %}
                   </tbody>
                 </table>
+
               </div>
+              <div class="text-center">
+                  <nav aria-label="Page navigation example" class="text-center">
+  <ul class="pagination">
+    {% if p.has_previous %}
+    <li class="page-item"><a class="page-link" href="?{% if search %}searchValue={{search}}&{% endif %}page={{p.number|add:'-1'}}">Previous</a></li>
+    {% endif %}
+  {% if p.number > 1 %}
+    <li class="page-item"><a class="page-link" href="?{% if search %}searchValue={{search}}&{% endif %}page={{p.number|add:'-1'}}">{{p.number|add:"-1"}}</a></li>
+    {% endif %}
+    <li class="page-item active"><a class="page-link" href="?{% if search %}searchValue={{search}}&{% endif %}page={{p.number}}">{{p.number}}</a></li>
+    {% if p.has_next %}
+    <li class="page-item"><a class="page-link" href="?{% if search %}searchValue={{search}}&{% endif %}page={{p.number|add:'1'}}">{{p.number|add:"1"}}</a></li>
+    <li class="page-item"><a class="page-link" href="?{% if search %}searchValue={{search}}&{% endif %}page={{p.number|add:'1'}}">Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
+                </div>
             </div>
           </div>
         </div>
+
       </div>
+
     </section>
 
     <script

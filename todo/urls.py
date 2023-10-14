@@ -7,6 +7,7 @@ urlpatterns = [
     path("", index_view, name='index'),
     path("add/", add_view, name='add'),
     path("detail/<int:id>/", detail_view, name="detail"),
+    path("edit/<int:id>/", edit_view, name='edit'),
 
 
 ]

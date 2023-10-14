@@ -41,11 +41,21 @@
 
 
 <div class="container mt-5">
-        <form>
+        <form method="post">
+            {% csrf_token %}
   <!-- Name input -->
   <div class="form-outline mb-4">
-    <textarea name="" cols="30" rows="5" id="form4Example1" class="form-control">snjvbhugde</textarea>
-    <label class="form-label" for="form4Example1">Task name</label>
+    <textarea name="task" cols="30" rows="5" id="form4Example1" class="form-control">{{edit_obj.name}}</textarea>
+    <label class="form-label" for="form4Example1">Task name  </label>
+
+      <select name="status" id="" class="form-control">
+          <option value="">{{edit_obj.status}}</option>
+{% for i in choices %}
+          {% if i.0 != edit_obj.status %}
+          <option value="{{i.0}}">{{i.0}}</option>
+          {% endif %}
+       {% endfor %}
+      </select>
   </div>
 
 
@@ -57,7 +67,7 @@
 
 
   <!-- Submit button -->
-  <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+  <button type="submit" class="btn btn-primary btn-block mb-4">Update</button>
 </form>
     </div>
 
