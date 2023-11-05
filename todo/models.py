@@ -1,10 +1,13 @@
 from django.db import models
 
 CHOICES = (
+
     ("Hələ başlanmayıb", "not"),
     ("Davam edir", "progress"),
     ("Bitib", "finish")
+    
 )
+
 
 
 class Todo(models.Model):
